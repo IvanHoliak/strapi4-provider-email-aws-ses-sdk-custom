@@ -1,32 +1,19 @@
-import nodemailer from "nodemailer";
-import aws from "@aws-sdk/client-ses";
-
-interface Settings {
-  defaultFrom: string;
-  defaultReplyTo: string;
+async function nodemailerModule() {
+  return (await import("nodemailer")).default;
 }
 
-interface SendOptions {
-  to: string;
-  cc: string;
-  bcc: string;
-  subject: string;
-  text: string;
-  html: string;
-  replyTo?: string;
-  from?: string;
-  [key: string]: unknown;
+async function awsModule() {
+  return (await import("@aws-sdk/client-ses")).default;
 }
 
-interface ProviderOptions {
-  region: string;
-}
+module.exports = {
+  provider: "strapi4-provider-email-aws-ses-sdk-custom",
+  name: "strapi4-provider-email-aws-ses-sdk-custom",
 
-export = {
-  provider: "strapi4-provider-email-aws-ses-sdk",
-  name: "strapi4-provider-email-aws-ses-sdk",
+  init: async(providerOptions, settings) => {
+    const aws = await awsModule();
+    const nodemailer = await nodemailerModule();
 
-  init(providerOptions: ProviderOptions, settings: Settings) {
     const ses = new aws.SES({
       apiVersion: "2010-12-01",
       region: providerOptions.region,
@@ -37,7 +24,7 @@ export = {
     });
 
     return {
-      send: async (options: SendOptions) => {
+      send: async (options) => {
         const { from, to, cc, bcc, replyTo, subject, text, html, attachments, ...rest } = options;
 
         const msg = {
