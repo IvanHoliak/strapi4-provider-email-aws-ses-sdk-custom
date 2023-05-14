@@ -30,6 +30,7 @@ module.exports = {
           subject,
           text,
           html,
+          attachments,
           ...rest,
         };
 

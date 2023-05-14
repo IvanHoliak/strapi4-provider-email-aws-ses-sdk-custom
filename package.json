@@ -1,6 +1,6 @@
 {
   "name": "strapi4-provider-email-aws-ses-sdk-custom",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "AWS SES provider for Strapi 4",
   "keywords": [
     "strapi",
