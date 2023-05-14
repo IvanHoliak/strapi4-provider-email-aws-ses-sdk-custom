@@ -8,7 +8,7 @@
     "provider",
     "ses"
   ],
-  "main": "./src/index.js",
+  "main": "./src",
   "files": [
     "./src"
   ],

@@ -1,19 +1,13 @@
-async function nodemailerModule() {
-  return (await import("nodemailer")).default;
-}
+"use strict";
 
-async function awsModule() {
-  return (await import("@aws-sdk/client-ses")).default;
-}
+const aws = require("@aws-sdk/client-ses");
+const nodemailer = require("nodemailer");
 
 module.exports = {
   provider: "strapi4-provider-email-aws-ses-sdk-custom",
   name: "strapi4-provider-email-aws-ses-sdk-custom",
 
-  init: async(providerOptions, settings) => {
-    const aws = await awsModule();
-    const nodemailer = await nodemailerModule();
-
+  init(providerOptions, settings){
     const ses = new aws.SES({
       apiVersion: "2010-12-01",
       region: providerOptions.region,
